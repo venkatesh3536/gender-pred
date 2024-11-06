@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gender Prediction by Name</title>
+    <style>
+        body {
+            transition: background-color 5s ease;
+        }
+    </style>
+</head>
+<body>
+<fieldset>
+
+    <h1>Predict Gender by Name</h1>
+    <input type="text" id="nameInput" placeholder="Enter a name" />
+    <br>
+    <br>
+    
+    <button onclick="predictGender()">Predict Gender</button>
+
+    <div id="result"></div>
+
+
+
+
+
+
+
+    <script>
+              function getRandomColor() {
+            return '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+        }
+  function changeColor() {
+            document.body.style.backgroundColor = getRandomColor();
+            setTimeout(changeColor, 3000);
+        }
+        window.onload = changeColor;
+
+
+        function predictGender() {
+            const name = document.getElementById('nameInput').value;
+
+            if (name === "") {
+                document.getElementById('result').innerText = "Please enter a name!";
+                return;
+            }
+            
+            
+            fetch(`https://api.genderize.io?name=${name}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.gender) {
+                        document.getElementById('result').innerText = 
+                            `The predicted gender for "${name}" is: ${data.gender}`;
+                    } else {
+                        document.getElementById('result').innerText = 
+                            `Sorry, we couldn't predict the gender for "${name}".`;
+                    }
+                })
+                
+                .catch(error => {
+                    document.getElementById('result').innerText = 
+                        "There was an error predicting the gender.";
+                    console.error(error);
+                });
+                                
+        }
+
+    </script>
+    </fieldset>
+</body>
+</html>
+
+
+<style>
+    
+    }
+    input, button {
+        
+        padding: 50px;
+        margin: 5px;
+        font-size: 15px;
+        border-radius: 0.5em;
+        text-align: center;
+    
+    }
+    ::placeholder{
+       color: rgb(6, 136, 249);
+       border-width: 3px;
+       height: 100px;
+       width: 100px;
+       padding: 20px;
+       border-width: 3px;
+       margin-top: 500px;
+    }
+    #result {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    button{
+      color: rgb(5, 5, 5);
+      background-color:rgb(166, 239, 55);
+      border-radius: 0.5em;
+      border-width: 3px;
+      text-align: center;
+      padding: 7px;
+    
+      
+      
+    }
+    h1{
+      color:rgb(20, 17, 16);
+    }
+    fieldset{
+      height:300px;
+      width: 400px;
+      margin-left: 500px;
+      margin-bottom: 170px;
+      background-color: rgb(11, 207, 237);
+      border-radius: 15px;
+      border-width: 7px;
+    
+    }
+    #name{
+        color: blue;
+    }
+    
+</style>
